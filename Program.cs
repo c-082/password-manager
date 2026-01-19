@@ -1,6 +1,5 @@
 ﻿using PasswordManager.Models;
 using PasswordManager.Services;
-var Accounts = DataService.Load();
 Console.WriteLine("""
                 ================
 =============== PASSWORD MANAGER ===============
@@ -19,10 +18,10 @@ while (true)
     switch (choice)
     {
         case '1':
-            AddAccount();
+            await AddAccount();
             break;
         case '2':
-            ViewAccounts();
+            await ViewAccounts();
             break;
         case '3':
             return;
@@ -31,7 +30,7 @@ while (true)
             continue;
     }
 }
-void AddAccount()
+async Task AddAccount()
 {
     Console.Write("Enter email: ");
     var email = Console.ReadLine();
@@ -61,12 +60,12 @@ void AddAccount()
         Site = site!,
         EncryptedPassword = encryptedPassword
     };
-    DataService.Add(account);
+    await DataService.Add(account);
     Console.WriteLine("Password added successfully");
 }
-void ViewAccounts()
+async Task ViewAccounts()
 {
-    var accounts = DataService.Load();
+    var accounts = await DataService.Load();
     if (accounts.Count == 0)
     {
         Console.WriteLine("No accounts stored yet");

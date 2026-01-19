@@ -5,25 +5,25 @@ namespace PasswordManager.Services;
 static class DataService
 {
     private const string FilePath = "accounts.json";
-    public static List<Account> Load()
+    public static async Task<List<Account>> Load()
     {
         if (!File.Exists(FilePath))
             return [];
-        string json = File.ReadAllText(FilePath);
+        string json = await File.ReadAllTextAsync(FilePath);
         return JsonSerializer.Deserialize<List<Account>>(json) ?? [];
     }
-    private static void Save(List<Account> accounts)
+    private static async Task Save(List<Account> accounts)
     {
         string json = JsonSerializer.Serialize(accounts, new JsonSerializerOptions
         {
             WriteIndented = true
         });
-        File.WriteAllText(FilePath, json);
+        await File.WriteAllTextAsync(FilePath, json);
     }
-    public static void Add(Account account)
+    public static async Task Add(Account account)
     {
-        var accounts = Load();
+        var accounts = await Load();
         accounts.Add(account);
-        Save(accounts);
+        await Save(accounts);
     }
 }
