@@ -1,5 +1,6 @@
 ﻿using PasswordManager.Models;
 using PasswordManager.Services;
+
 Console.WriteLine("""
                 ================
 =============== PASSWORD MANAGER ===============
@@ -32,11 +33,11 @@ while (true)
 }
 async Task AddAccount()
 {
-    Console.Write("Enter email: ");
-    var email = Console.ReadLine();
-    if (!ValidationService.IsValidEmail(email))
+    Console.Write("Enter username: ");
+    var username = Console.ReadLine();
+    if (!ValidationService.IsValidUsername(username))
     {
-        Console.WriteLine("Invalid email format");
+        Console.WriteLine("Username is either too long or empty");
         return;
     }
     Console.Write("Enter site: ");
@@ -56,7 +57,7 @@ async Task AddAccount()
     var encryptedPassword = PasswordService.Encrypt(password!);
     Account account = new()
     {
-        Email = email!,
+        Username = username!,
         Site = site!,
         EncryptedPassword = encryptedPassword
     };
@@ -72,10 +73,12 @@ async Task ViewAccounts()
         return;
     }
     foreach (var acc in accounts)
+    {
         Console.WriteLine($"""
-        Email: {acc.Email}
+        Username: {acc.Username}
         Site: {acc.Site}
         Password: {PasswordService.Decrypt(acc.EncryptedPassword)}
         ---------------
         """);
+    }
 }
