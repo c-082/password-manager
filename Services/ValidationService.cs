@@ -2,7 +2,7 @@ namespace PasswordManager.Services;
 
 internal static class ValidationService
 {
-    internal static bool IsValidUsername(string? username)
+    public static bool IsValidUsername(string? username)
     {
         if (string.IsNullOrWhiteSpace(username))
         {
@@ -14,7 +14,7 @@ internal static class ValidationService
         }
         return true;
     }
-    internal static bool IsValidSite(string? site) => !(string.IsNullOrWhiteSpace(site) || site.Length > 255);
-    internal static bool IsValidPassword(string? password) => !(string.IsNullOrEmpty(password) || password.Length > 128);
+    public static bool IsValidSite(string? site) => !(string.IsNullOrWhiteSpace(site) || site.Length > 255);
+    public static bool IsValidPassword(string? password) => !(string.IsNullOrEmpty(password) || password.Length > 128);
 
 }

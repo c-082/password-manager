@@ -15,7 +15,6 @@ internal static class PasswordService
         var provider = serviceProvider.GetRequiredService<IDataProtectionProvider>();
         return provider.CreateProtector("Passwords");
     }
-
-    internal static string Encrypt(string plainPassword) => _protector.Protect(plainPassword);
-    internal static string Decrypt(string encryptedPassword) => _protector.Unprotect(encryptedPassword);
+    public static string Encrypt(string plainPassword) => _protector.Protect(plainPassword);
+    public static string Decrypt(string encryptedPassword) => _protector.Unprotect(encryptedPassword);
 }

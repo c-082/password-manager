@@ -15,7 +15,7 @@ internal static class DataService
         });
         await File.WriteAllTextAsync(FilePath, json);
     }
-    internal static async Task<List<Account>> Load()
+    public static async Task<List<Account>> Load()
     {
         if (!File.Exists(FilePath))
         {
@@ -25,7 +25,7 @@ internal static class DataService
         string json = await File.ReadAllTextAsync(FilePath);
         return JsonSerializer.Deserialize<List<Account>>(json) ?? [];
     }
-    internal static async Task Add(Account account)
+    public static async Task Add(Account account)
     {
         var accounts = await Load();
         accounts.Add(account);
