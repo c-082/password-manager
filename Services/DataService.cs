@@ -7,6 +7,13 @@ namespace PasswordManager.Services;
 internal static class DataService
 {
     private const string FilePath = "accounts.json";
+    static DataService()
+    {
+        if (!File.Exists(FilePath) || File.ReadAllText(FilePath) == string.Empty)
+        {
+            Save([]).Wait();
+        }
+    }
     private static async Task Save(List<Account> accounts)
     {
         string json = JsonSerializer.Serialize(accounts, new JsonSerializerOptions
@@ -21,7 +28,6 @@ internal static class DataService
         {
             return [];
         }
-
         string json = await File.ReadAllTextAsync(FilePath);
         return JsonSerializer.Deserialize<List<Account>>(json) ?? [];
     }
