@@ -1,6 +1,6 @@
 namespace PasswordManager.Models;
 
-internal class Account
+class Account
 {
     public string Username { get; set; } = string.Empty;
     public string Site { get; set; } = string.Empty;

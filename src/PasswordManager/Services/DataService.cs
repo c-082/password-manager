@@ -4,9 +4,15 @@ using PasswordManager.Models;
 
 namespace PasswordManager.Services;
 
-internal static class DataService
+static class DataService
 {
     private const string FilePath = "accounts.json";
+    private static readonly JsonSerializerOptions Options = new()
+    {
+        WriteIndented = true,
+        IndentSize = 4
+    };
+
     static DataService()
     {
         if (!File.Exists(FilePath) || File.ReadAllText(FilePath) == string.Empty)
@@ -16,10 +22,7 @@ internal static class DataService
     }
     private static async Task Save(List<Account> accounts)
     {
-        string json = JsonSerializer.Serialize(accounts, new JsonSerializerOptions
-        {
-            WriteIndented = true
-        });
+        string json = JsonSerializer.Serialize(accounts, Options);
         await File.WriteAllTextAsync(FilePath, json);
     }
     public static async Task<List<Account>> Load()

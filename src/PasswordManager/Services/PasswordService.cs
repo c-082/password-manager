@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace PasswordManager.Services;
 
-internal static class PasswordService
+static class PasswordService
 {
-    private static readonly IDataProtector _protector = CreateProtector();
+    private static readonly IDataProtector Protector = CreateProtector();
     private static IDataProtector CreateProtector()
     {
         var services = new ServiceCollection();
@@ -15,6 +15,6 @@ internal static class PasswordService
         var provider = serviceProvider.GetRequiredService<IDataProtectionProvider>();
         return provider.CreateProtector("Passwords");
     }
-    public static string Encrypt(string plainPassword) => _protector.Protect(plainPassword);
-    public static string Decrypt(string encryptedPassword) => _protector.Unprotect(encryptedPassword);
+    public static string Encrypt(string plainPassword) => Protector.Protect(plainPassword);
+    public static string Decrypt(string encryptedPassword) => Protector.Unprotect(encryptedPassword);
 }
